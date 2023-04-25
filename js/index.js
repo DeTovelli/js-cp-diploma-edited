@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 
   createRequest({
-    url: "https://f0769682.xsph.ru/",
+    url: "http://f0769682.xsph.ru/",
     params:  "event=update",
     callback: (resp) => {
       data.seances = resp.seances.result; // Получение списка  сеансов
