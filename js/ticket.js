@@ -3,7 +3,7 @@
 const  selectSeanse = JSON.parse(localStorage.selectSeanse)
 console.log(selectSeanse);
 
-// Формируем строку с выбранными местами и счетаем общую сумму
+// We form a line with the selected places and calculate the total amount
 let places = "";
 let price = 0;
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   document.querySelector('.ticket__hall').innerHTML = selectSeanse.hallName; // название зала
   document.querySelector('.ticket__start').innerHTML = selectSeanse.seanceTime; // начало сеанса
 
-  //Формируем строку для QR кода
+  //Forming a string for a QR code
   const date = new Date(Number(`${selectSeanse.seanceTimeStamp}000`));
   let dd = date.getDate();
   if (dd < 10) {dd = '0' + dd};

@@ -1,7 +1,6 @@
 "use strict"
 
 const createRequest = (options = {}) => {
-  // console.log(options.params);
   const xhr = new XMLHttpRequest();
   xhr.open("POST", options.url, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

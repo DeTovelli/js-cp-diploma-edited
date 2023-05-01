@@ -5,7 +5,7 @@ const data = {};
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
-  // Обновление ленты навигации с датой
+  // Update navigation feed with date
   const dayNumber = document.querySelectorAll(".page-nav__day-number");
   const dayWeek = document.querySelectorAll(".page-nav__day-week");
   const dayWeekList = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -29,13 +29,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     url: "http://f0769682.xsph.ru/",
     params:  "event=update",
     callback: (resp) => {
-      data.seances = resp.seances.result; // Получение списка  сеансов
-      data.films = resp.films.result; // Получение списка фильмов
-      data.halls = resp.halls.result; // Получение списка залов
+      data.seances = resp.seances.result; // Get a list of sessions
+      data.films = resp.films.result; // Get a list of movies
+      data.halls = resp.halls.result; // Get a list of halls
         data.halls = data.halls.filter(hall => hall.hall_open == 1)
       console.log(data);
       
-      // Отрисовка контента
+      // Content rendering
       const main = document.querySelector("main")
       data.films.forEach((film) => {
         let seancesHTML = '';
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   const dayLinks = Array.from(document.getElementsByClassName("page-nav__day"));
   const movieSeances = Array.from(document.getElementsByClassName("movie-seances__time"));
-  // Вешаем событие onclixk на вкладки с датами
+  // We hang an onclick event on tabs with dates
   dayLinks.forEach(dayLink => dayLink.addEventListener('click', (event)=> {
     event.preventDefault();
     document.getElementsByClassName("page-nav__day_chosen")[0].classList.toggle("page-nav__day_chosen");
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
       const timeStampSeance = timeStampDay + timeStampSeanceDay;
       const timeStampNow = Math.trunc(+new Date() / 1000);
       movieSeance.dataset.seanceTimeStamp = timeStampSeance;
-      if ((timeStampSeance - timeStampNow) > 0) { // Если сеанс еще не начался
+      if ((timeStampSeance - timeStampNow) > 0) { // If the session has not started yet
         movieSeance.classList.remove('acceptin-button-disabled');
       } else {
         movieSeance.classList.add('acceptin-button-disabled');
@@ -105,40 +105,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
   dayLinks[0].click();
 
   movieSeances.forEach(movieSeance => movieSeance.addEventListener('click', (event)=>{
-      //event.preventDefault();
       const selectSeanse = event.target.dataset;
-      selectSeanse.hallConfig = data.halls.filter(hall => hall.hall_id == selectSeanse.hallId)[0].hall_config/*.replace(/conf-step/g, 'buying-scheme')*/
+      selectSeanse.hallConfig = data.halls.filter(hall => hall.hall_id == selectSeanse.hallId)[0].hall_config
       localStorage.clear();
       localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse))
     })
   )
 
- /* movieSeances.forEach(movieSeance => movieSeance.addEventListener('click', (event)=>{
-    event.preventDefault();
-    const seanceId = event.target.dataset.seanceId;
-    const timeStampDay = Number(document.getElementsByClassName('page-nav__day_chosen')[0].dataset.timeStamp);
-    const timeStampSeanceDay = Number(event.target.dataset.seanceStart) * 60;
-    const timeStampSeance = timeStampDay + timeStampSeanceDay;
-    const timeStampNow = Math.trunc(+new Date() / 1000);
-    if ((timeStampSeance - timeStampNow) > 0) { // Если сеанс еще не начался
-      event.target.removeAttribute("disabled");
-    } else {
-      event.target.setAttribute("disabled", true);
-    }
 
-    const params = `seanceId=${seanceId}&timeStampDay=${timeStampDay}`
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/client/scripts/events.php", true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(params);
-    xhr.onreadystatechange =  () => {
-      if((xhr.readyState === 4) && (xhr.status === 200)) {
-        const link = document.createElement('a');
-        link.href = "/client/hall.php";
-       // link.click();
-      }
-    }
-  }))*/
     }     
   })
 });

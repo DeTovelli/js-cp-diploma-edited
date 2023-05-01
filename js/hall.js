@@ -28,7 +28,7 @@ createRequest({
     buttonAcceptin.setAttribute("disabled", true);
   }
 
-  // Вешаем событие onclixk на кресла
+  // We hang the onclick event on the chairs
   chairs.forEach(chair => chair.addEventListener('click', (event) => {
     if (event.target.classList.contains('conf-step__chair_taken')) {return}; // Прерываем выполнение если клик был по забронированному месту
     event.target.classList.toggle('conf-step__chair_selected');
@@ -41,17 +41,17 @@ createRequest({
   }));
   }})
   
-  // Вешаем событие onclick на кнопку
+  // We hang the onclick event on the button
   buttonAcceptin.addEventListener("click", (event) => {
     event.preventDefault();
-    // Формируем список выбранных мест
+    // We form a list of selected places
     const selectedPlaces = Array();
     const divRows = Array.from(document.getElementsByClassName("conf-step__row"));
     for (let i=0; i < divRows.length; i++) {
       const spanPlaces = Array.from(divRows[i].getElementsByClassName("conf-step__chair"));
       for (let j=0; j < spanPlaces.length; j++) {
         if (spanPlaces[j].classList.contains("conf-step__chair_selected")) {
-          // Определяем тип выбранного кресла
+          // Determine the type of chair chosen
           const typePlace = (spanPlaces[j].classList.contains("conf-step__chair_standart")) ? "standart" : "vip"
           selectedPlaces.push({
             "row": i+1,
@@ -61,9 +61,9 @@ createRequest({
         }
       }
     }
-    // Изменяем выбранные места на занятые и сохраняем новую конфигурацию 
+    // Change the selected seats to occupied and save the new configuration
     const configurationHall = document.querySelector('.conf-step__wrapper').innerHTML;
-    // Формируем и отправляем запрос
+    // Forming and sending a request
     selectSeanse.hallConfig = configurationHall;
     selectSeanse.salesPlaces = selectedPlaces;
     localStorage.clear();
