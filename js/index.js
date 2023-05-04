@@ -107,15 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }))
       dayLinks[0].click();
 
-      movieSeances.forEach(movieSeance => {
-        movieSeance.addEventListener('click', (event) => {
-          const selectSeanse = { ...event.target.dataset };
-          const hall = halls.find(hall => hall.hall_id == selectSeanse.hallId);
-          selectSeanse.hallConfig = hall.hall_config;
-          localStorage.clear();
-          localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse));
-        });
-      });
+      movieSeances.forEach(movieSeance => movieSeance.addEventListener('click', (event) => {
+        const selectSeanse = event.target.dataset;
+        selectSeanse.hallConfig = data.halls.filter(hall => hall.hall_id == selectSeanse.hallId)[0].hall_config
+        localStorage.clear();
+        localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse))
+      })
+      )
 
 
     }
