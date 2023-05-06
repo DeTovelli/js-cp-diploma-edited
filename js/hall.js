@@ -51,23 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
-  
+
   // We hang the onclick event on the button
   buttonAcceptin.addEventListener("click", (event) => {
     event.preventDefault();
     // We form a list of selected places
     const selectedPlaces = Array();
     const divRows = Array.from(document.getElementsByClassName("conf-step__row"));
-    for (let i=0; i < divRows.length; i++) {
+    for (let i = 0; i < divRows.length; i++) {
       const spanPlaces = Array.from(divRows[i].getElementsByClassName("conf-step__chair"));
-      for (let j=0; j < spanPlaces.length; j++) {
+      for (let j = 0; j < spanPlaces.length; j++) {
         if (spanPlaces[j].classList.contains("conf-step__chair_selected")) {
           // Determine the type of chair chosen
           const typePlace = (spanPlaces[j].classList.contains("conf-step__chair_standart")) ? "standart" : "vip";
           selectedPlaces.push({
-            "row": i+1,
-            "place": j+1,
-            "type":  typePlace
+            "row": i + 1,
+            "place": j + 1,
+            "type": typePlace
           });
         }
       }

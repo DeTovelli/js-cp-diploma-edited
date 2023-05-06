@@ -1,29 +1,31 @@
-"use strict"
+"use strict";
 
-const data = {};
-
-
+const dayWeekList = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 document.addEventListener("DOMContentLoaded", () => {
   // Update navigation feed with date
-  const dayNumber = document.querySelectorAll(".page-nav__day-number");
-  const dayWeek = document.querySelectorAll(".page-nav__day-week");
-  const dayWeekList = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  const dayNumberElements = document.querySelectorAll(".page-nav__day-number");
+  const dayWeekElements = document.querySelectorAll(".page-nav__day-week");
+
   const today = new Date();
   today.setHours(0, 0, 0);
-  for (let i = 0; i < dayNumber.length; i++) {
+
+  dayNumberElements.forEach((dayNumberElement, i) => {
     const day = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
     const timestamp = Math.trunc(day / 1000);
-    dayNumber[i].innerHTML = `${day.getDate()},`;
-    dayWeek[i].innerHTML = `${dayWeekList[day.getDay()]}`;
-    const link = dayNumber[i].parentNode;
+    dayNumberElement.innerHTML = `${day.getDate()},`;
+    dayWeekElements[i].innerHTML = dayWeekList[day.getDay()];
+
+    const link = dayNumberElement.parentNode;
     link.dataset.timeStamp = timestamp;
-    if ((dayWeek[i].innerHTML == 'Вс') || (dayWeek[i].innerHTML == 'Сб')) {
+
+    if (dayWeekElements[i].innerHTML === 'Вс' || dayWeekElements[i].innerHTML === 'Сб') {
       link.classList.add('page-nav__day_weekend');
     } else {
       link.classList.remove('page-nav__day_weekend');
     }
-  }
+  });
+
 
   createRequest({
     url: "http://f0769682.xsph.ru/",
@@ -78,42 +80,54 @@ document.addEventListener("DOMContentLoaded", () => {
               `
         }
       })
-
-
-
-      const dayLinks = Array.from(document.getElementsByClassName("page-nav__day"));
-      const movieSeances = Array.from(document.getElementsByClassName("movie-seances__time"));
-      // We hang an onclick event on tabs with dates
-      dayLinks.forEach(dayLink => dayLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        document.getElementsByClassName("page-nav__day_chosen")[0].classList.toggle("page-nav__day_chosen");
-        dayLink.classList.toggle("page-nav__day_chosen");
-
+      
+      const dayLinks = Array.from(document.querySelectorAll(".page-nav__day"));
+      const movieSeances = Array.from(document.querySelectorAll(".movie-seances__time"));
+      
+      const getTimeStampDay = (event) => {
         let timeStampDay = Number(event.target.dataset.timeStamp);
         if (isNaN(timeStampDay)) {
-          timeStampDay = Number(event.target.closest('.page-nav__day').dataset.timeStamp)
+          timeStampDay = Number(event.target.closest(".page-nav__day").dataset.timeStamp);
         }
-        movieSeances.forEach(movieSeance => {
+        return timeStampDay;
+      };
+      
+      const updateSeances = (timeStampDay) => {
+        movieSeances.forEach((movieSeance) => {
           const timeStampSeanceDay = Number(movieSeance.dataset.seanceStart) * 60;
           const timeStampSeance = timeStampDay + timeStampSeanceDay;
           const timeStampNow = Math.trunc(+new Date() / 1000);
           movieSeance.dataset.seanceTimeStamp = timeStampSeance;
-          if ((timeStampSeance - timeStampNow) > 0) { // If the session has not started yet
-            movieSeance.classList.remove('acceptin-button-disabled');
-          } else {
-            movieSeance.classList.add('acceptin-button-disabled');
-          }
+          movieSeance.classList.toggle(
+            "acceptin-button-disabled",
+            timeStampSeance - timeStampNow <= 0
+          );
+        });
+      };
+      
+      dayLinks.forEach((dayLink) =>
+        dayLink.addEventListener("click", (event) => {
+          event.preventDefault();
+          document.querySelector(".page-nav__day_chosen").classList.remove("page-nav__day_chosen");
+          dayLink.classList.add("page-nav__day_chosen");
+          const timeStampDay = getTimeStampDay(event);
+          updateSeances(timeStampDay);
         })
-      }))
+      );
+      
       dayLinks[0].click();
-
-      movieSeances.forEach(movieSeance => movieSeance.addEventListener('click', (event) => {
-        const selectSeanse = event.target.dataset;
-        selectSeanse.hallConfig = data.halls.filter(hall => hall.hall_id == selectSeanse.hallId)[0].hall_config
-        localStorage.clear();
-        localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse))
-      })
-      )
+      
+      movieSeances.forEach((movieSeance) =>
+        movieSeance.addEventListener("click", (event) => {
+          const { hallId } = event.target.dataset;
+          const selectSeanse = {
+            ...event.target.dataset,
+            hallConfig: data.halls.find((hall) => hall.hall_id == hallId).hall_config,
+          };
+          localStorage.clear();
+          localStorage.setItem("selectSeanse", JSON.stringify(selectSeanse));
+        })
+      );
 
 
     }
