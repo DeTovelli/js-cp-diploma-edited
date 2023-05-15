@@ -24,8 +24,19 @@ const newHallConfig = selectSeanse.hallConfig.replace(/selected/g, "taken");
 
 document.querySelector(".acceptin-button").addEventListener("click", (event) => {
   event.preventDefault();
-  fetch("http://f0769682.xsph.ru/", {
+  //  fetch("http://f0769682.xsph.ru/", {
+  fetch("https://jscp-diplom.netoserver.ru/", {
     method: "POST",
-    body: `event=sale_add&timestamp=${selectSeanse.seanceTimeStamp}&hallId=${selectSeanse.hallId}&seanceId=${selectSeanse.seanceId}&hallConfiguration=${newHallConfig}`,
+    body: `event=sale_add&timestamp=${timestamp}&hallId=${hallId}&seanceId=${seanceId}&hallConfiguration=${reserveHall}`,
   });
 });
+
+const onReserveButtonClick = (evt) => {
+  evt.preventDefault();
+  window.localStorage.setItem('ticketId', Date.now());
+  sendReserveToServer();
+  window.location.href = './ticket.html';
+}
+
+makeTicketDescription();
+reserveButton.addEventListener('click', onReserveButtonClick);

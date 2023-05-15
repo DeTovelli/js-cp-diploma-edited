@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const params = `event=get_hallConfig&timestamp=${selectSeanse.seanceTimeStamp}&hallId=${selectSeanse.hallId}&seanceId=${selectSeanse.seanceId}`;
 
   createRequest({
-    url: "http://f0769682.xsph.ru/",
+    url: `https://jscp-diplom.netoserver.ru/`,
+   // url: "http://f0769682.xsph.ru/",
     params,
     callback: (resp) => {
       console.log(resp);
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Forming and sending a request
     selectSeanse.hallConfig = configurationHall;
     selectSeanse.salesPlaces = selectedPlaces;
-    localStorage.clear();
+    //localStorage.clear();
     localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse));
     const link = document.createElement('a');
     link.href = "payment.html";

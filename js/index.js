@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   createRequest({
-    url: "http://f0769682.xsph.ru/",
+    url: `https://jscp-diplom.netoserver.ru/`,
+    //url: "http://f0769682.xsph.ru/",
     params: "event=update",
     callback: (resp) => {
       const data = {};
