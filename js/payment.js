@@ -22,11 +22,17 @@ document.querySelector(".ticket__cost").innerHTML = price; // price
 
 const newHallConfig = selectSeanse.hallConfig.replace(/selected/g, "taken");
 
+console.log(selectSeanse.seanceTimeStamp);
+console.log(selectSeanse.hallId);
+console.log(selectSeanse.seanceId);
+console.log(newHallConfig);
+
 document.querySelector(".acceptin-button").addEventListener("click", (event) => {
   event.preventDefault();
   fetch("https://jscp-diplom.netoserver.ru/", {
     method: "POST",
-    body: `event=sale_add&timestamp=${timestamp}&hallId=${hallId}&seanceId=${seanceId}&hallConfiguration=${reserveHall}`,
+   
+    body: `event=sale_add&timestamp=${selectSeanse.seanceTimeStamp}&hallId=${selectSeanse.hallId}&seanceId=${selectSeanse.seanceId}&hallConfiguration=${newHallConfig}`,
   });
 });
 
@@ -35,7 +41,5 @@ const onReserveButtonClick = (evt) => {
   window.localStorage.setItem('ticketId', Date.now());
   sendReserveToServer();
   window.location.href = './ticket.html';
-}
+} 
 
-makeTicketDescription();
-reserveButton.addEventListener('click', onReserveButtonClick);

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const params = `event=get_hallConfig&timestamp=${selectSeanse.seanceTimeStamp}&hallId=${selectSeanse.hallId}&seanceId=${selectSeanse.seanceId}`;
 
-  createRequest({
+createRequest({
     url: `https://jscp-diplom.netoserver.ru/`,
     params,
     callback: (resp) => {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
-  });
+  }); 
 
   // We hang the onclick event on the button
   buttonAcceptin.addEventListener("click", (event) => {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Forming and sending a request
     selectSeanse.hallConfig = configurationHall;
     selectSeanse.salesPlaces = selectedPlaces;
-    localStorage.clear();
+    //localStorage.clear();
     localStorage.setItem('selectSeanse', JSON.stringify(selectSeanse));
     const link = document.createElement('a');
     link.href = "payment.html";
@@ -85,4 +85,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-});
+}); 
