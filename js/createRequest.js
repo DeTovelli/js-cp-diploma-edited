@@ -1,5 +1,3 @@
-"use strict"
-
 const createRequest = (options = {}) => {
   const xhr = new XMLHttpRequest();
   xhr.open(options.method || "POST", options.url, true);

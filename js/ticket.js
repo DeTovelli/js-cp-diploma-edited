@@ -1,5 +1,3 @@
-"use strict";
-
 function generateTicket() {
   const selectSeanse = JSON.parse(localStorage.selectSeanse);
   console.log(selectSeanse);
@@ -34,7 +32,13 @@ function generateTicket() {
   if (mm < 10) {
     mm = "0" + mm;
   }
-  const dateStr = `${dd}-${mm}-${date.getFullYear()}`;
+  //const dateStr = `${dd}-${mm}-${date.getFullYear()}`;
+
+  const dateStr = date.toLocaleDateString("ru-RU", {
+		day: "2-digit",
+		month: "2-digit",
+		year: "numeric"
+	});
 
   let textQR = `Фильм: ${selectSeanse.filmName} Зал: ${
     selectSeanse.hallName
