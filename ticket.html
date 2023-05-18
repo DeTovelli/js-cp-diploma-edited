@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
-  <script src="js/ticket.js" defer></script>
-  <script src="js/QRCreator.js" defer></script>
+  
+ 
 </head>
 
 <body>
@@ -26,19 +26,22 @@
       </header>
       
       <div class="ticket__info-wrapper">
-        <p class="ticket__info">На фильм: <span class="ticket__details ticket__title"> </span></p>
-        <p class="ticket__info">Ряд/Место: <span class="ticket__details ticket__chairs"> </span></p>
-        <p class="ticket__info">В зале: <span class="ticket__details ticket__hall"> </span></p>
-        <p class="ticket__info">Начало сеанса: <span class="ticket__details ticket__start"> </span></p>
+        <p class="ticket__info">На фильм: <span class="ticket__details ticket__title"></span></p>
+        <p class="ticket__info">Ряд/Место: <span class="ticket__details ticket__chairs"></span></p>
+        <p class="ticket__info">В зале: <span class="ticket__details ticket__hall"></span></p>
+        <p class="ticket__info">Начало сеанса: <span class="ticket__details ticket__start"></span></p>
 
         <div class="ticket__info-qr"></div>
+       
 
         <p class="ticket__hint">Покажите QR-код нашему контроллеру для подтверждения бронирования.</p>
         <p class="ticket__hint">Приятного просмотра!</p>
       </div>
     </section>     
   </main>
+  <script src="js/createRequest.js"></script>
+  <script src="js/ticket.js" defer></script> 
+  <script src="js/QRCreator.js" defer></script> 
   
-  <script src="js/createRequest.js"></script> 
 </body>
 </html>
