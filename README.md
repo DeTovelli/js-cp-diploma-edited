@@ -70,3 +70,9 @@ JavaScript: код написан на JavaScript, популярном язык
 
 HTML: код взаимодействует с документом HTML, манипулируя элементами DOM и отображая динамическое содержимое.
 
+### Описание файлов JS
+- [CreateRequest](./md/createRequest.md)
+- [Hall](./md/hall.md)
+- [index](./md/index.md)
+- [Payment](./md/payment.md)
+- [Ticket](./md/ticket.md)
